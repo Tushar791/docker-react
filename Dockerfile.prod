@@ -1,0 +1,17 @@
+#pulling the base image
+From node:alpine
+
+#setting up the working directory
+workdir "./app/"
+
+#copying the dependency file and getting the dependency
+copy package.json .
+run npm install
+copy . .
+#creating a build 
+run npm run build
+
+#pulling ngnix
+from nginx
+copy --from=0 /app/build /usr/share/nginx/html/
+
